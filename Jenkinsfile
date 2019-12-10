@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('error') {
       steps {
-        sleep(time: 2, unit: 'MINUTES')
+        echo 'hello'
       }
     }
 
