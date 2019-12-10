@@ -1,7 +1,7 @@
 pipeline {
   agent none
   stages {
-    stage('') {
+    stage('error') {
       steps {
         sleep(time: 2, unit: 'MINUTES')
       }
