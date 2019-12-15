@@ -25,7 +25,7 @@ pipeline {
 						docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 						echo $DOCKER_USERNAME
 						echo $DOCKER_PASSWORD
-						docker push maheshe/mahadocker1:cloudcapstonev2
+						docker push maheshe/mahadocker1:latest
 					'''
 				}
 			}
