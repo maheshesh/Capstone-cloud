@@ -39,15 +39,18 @@ pipeline {
 			}
 		}
 
-		stage('Deploy blue containersa') {
+		stage('Deploy blue containersi') {
 			steps {
 				 withKubeConfig([credentialsId: 'kubeConfigID', serverUrl: 'https://F05A1FD6A2358C1898816B230A44B40A.sk1.us-west-2.eks.amazonaws.com']) {
-				      sh 'kubectl apply -f ./deploy-containers-pipeline/blue-controller.json'
-				    }
+				 	sh '''
+						kubectl apply -f ./deploy-containers-pipeline/blue-controller.json
+					'''
+				 }
 			}
 		}
+		
 
-		stage('Deploy green containers') {
+		stage('Deploy green containersi') {
 			steps {
 				withAWS(region:'us-west-2', credentials:'mahajenkinsA') {
 					sh '''
