@@ -39,7 +39,7 @@ pipeline {
 			}
 		}
 
-		stage('Deploy blue container') {
+		stage('Deploy blue containersa') {
 			steps {
 				withAWS(region:'us-west-2', credentials:'mahajenkinsA') {
 				      sh '''
@@ -50,16 +50,11 @@ pipeline {
 			}
 		}
 
-		stage('Deploy green container') {
+		stage('Deploy green containers') {
 			steps {
 				withAWS(region:'us-west-2', credentials:'mahajenkinsA') {
 					sh '''
 						kubectl apply -f ./deploy-containers-pipeline/blue-controller.json
-					'''
-				}
-				withAWS(region:'us-west-2', credentials:'mahajenkinsA') {
-					sh '''
-						kubectl apply -f ./deploy-containers-pipeline/green-controller.json
 					'''
 				}
 			}
