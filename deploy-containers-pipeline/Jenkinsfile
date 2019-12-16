@@ -43,7 +43,7 @@ pipeline {
 			steps {
 				withAWS(region:'us-west-2', credentials:'mahajenkinsA') {
 					sh '''
-						kubectl apply -f ./blue-controller.json
+						kubectl apply -f ./deploy-containers-pipeline/blue-controller.json
 					'''
 				}
 			}
@@ -53,7 +53,7 @@ pipeline {
 			steps {
 				withAWS(region:'us-west-2', credentials:'mahajenkinsA') {
 					sh '''
-						kubectl apply -f ./green-controller.json
+						kubectl apply -f ./deploy-containers-pipeline/green-controller.json
 					'''
 				}
 			}
@@ -63,7 +63,7 @@ pipeline {
 			steps {
 				withAWS(region:'us-west-2', credentials:'mahajenkinsA') {
 					sh '''
-						kubectl apply -f ./blue-service.json
+						kubectl apply -f ./deploy-containers-pipeline/blue-service.json
 					'''
 				}
 			}
@@ -76,9 +76,9 @@ pipeline {
 
 		stage('Create the service in the cluster, redirect to green') {
 			steps {
-				withAWS(region:'us-east-1', credentials:'aws-static') {
+				withAWS(region:'us-west-2', credentials:'mahajenkinsA') {
 					sh '''
-						kubectl apply -f ./green-service.json
+						kubectl apply -f ./deploy-containers-pipeline/green-service.json
 					'''
 				}
 			}
