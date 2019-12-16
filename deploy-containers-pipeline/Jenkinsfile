@@ -41,8 +41,9 @@ pipeline {
 
 		stage('Deploy blue container') {
 			steps {
-				withKubeConfig([credentialsId: 'mahajenkinsA', serverUrl: 'https://F05A1FD6A2358C1898816B230A44B40A.sk1.us-west-2.eks.amazonaws.com']) {
+				withAWS(region:'us-west-2', credentials:'mahajenkinsA') {
 				      sh '''
+					kubectl config use-context arn:aws:eks:us-west-2:360735975530:cluster/capstonecluster
 					kubectl apply -f ./deploy-containers-pipeline/blue-controller.json
 					'''
 				    }
