@@ -44,11 +44,6 @@ pipeline {
 				 withKubeConfig([credentialsId: 'kubeConfigID', serverUrl: 'https://F05A1FD6A2358C1898816B230A44B40A.sk1.us-west-2.eks.amazonaws.com']) {
 				      sh 'kubectl apply -f ./deploy-containers-pipeline/blue-controller.json'
 				    }
-				withAWS(region:'us-west-2', credentials:'mahajenkinsA') {
-				      sh '''
-					 kubectl apply -f ./deploy-containers-pipeline/blue-controller.json
-					'''
-				    }
 			}
 		}
 
