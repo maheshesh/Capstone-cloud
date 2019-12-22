@@ -48,7 +48,7 @@ pipeline {
    				}
 			}
 		}
-		
+	
 
 		stage('Deploy green containersi') {
 			steps {
