@@ -41,12 +41,9 @@ pipeline {
 
 		stage('Deploy blue containersni') {
 			steps {
-				 withAWS(region:'us-west-2', credentials:'mahajenkinsA') {
-				 	sh '''
-						aws2 eks update-kubeconfig --name capstonecluster
-						kubectl apply -f /deploy-containers-pipeline/blue-controller.json
-					'''
-				 }
+				withKubeConfig([credentialsId: 'kubeConfigID’, serverUrl: 'https://D0DC828E5E939F2211A1A47D121A7859.gr7.us-west-2.eks.amazonaws.com']) {
+     					sh 'kubectl apply -f /deploy-containers-pipeline/blue-controller.json'
+   				}
 			}
 		}
 		
