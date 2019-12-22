@@ -41,7 +41,7 @@ pipeline {
 
 		stage('Deploy blue containersni') {
 			steps {
-				withKubeConfig([credentialsId: 'kubeConfigID’, serverUrl: 'https://D0DC828E5E939F2211A1A47D121A7859.gr7.us-west-2.eks.amazonaws.com']) {
+				withKubeConfig([credentialsId: 'kubeConfigID’, serverUrl: https://D0DC828E5E939F2211A1A47D121A7859.gr7.us-west-2.eks.amazonaws.com]) {
      					sh '''
 						kubectl apply -f /deploy-containers-pipeline/blue-controller.json
 					'''
