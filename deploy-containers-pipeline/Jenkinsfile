@@ -39,12 +39,12 @@ pipeline {
 			}
 		}
 
-		stage('Deploy blue containersis') {
+		stage('Deploy blue containersn') {
 			steps {
 				 withAWS(region:'us-west-2', credentials:'mahajenkinsA') {
 				 	sh '''
 						aws2 eks update-kubeconfig --name capstonecluster
-						kubectl apply -f /deploy-containers-pipeline/blue-controller.json
+						aws2 eks kubectl apply -f /deploy-containers-pipeline/blue-controller.json
 					'''
 				 }
 			}
