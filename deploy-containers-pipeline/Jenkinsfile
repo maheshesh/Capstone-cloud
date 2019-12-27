@@ -44,9 +44,7 @@ pipeline {
 				withAWS(region:'us-west-2', credentials:'mahajenkinsA') {
 					sh '''
 						aws2 eks update-kubeconfig --region us-west-2 --name capstonecluster --alias capstonecluster
-						export AWS_ACCESS_KEY_ID=$Access Key ID
-						export AWS_SECRET_ACCESS_KEY=$Secret Access Key
-						aws-iam-authenticator token -i cluster-name
+						aws-iam-authenticator token -i capstonecluster
 						kubectl apply -f /deploy-containers-pipeline/blue-controller.json
 					'''	
 				}
