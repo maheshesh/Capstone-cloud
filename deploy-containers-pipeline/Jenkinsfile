@@ -1,0 +1,91 @@
+pipeline {
+	agent any
+	stages {
+
+		stage('Lint HTML') {
+			steps {
+				sh 'tidy -q -e deploy-containers-pipeline/*.html'
+			}
+		}
+		
+		stage('Build Docker Image') {
+			steps {
+				withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]){
+					sh '''
+						docker build -t maheshe/mahadocker1 deploy-containers-pipeline/.
+					'''
+				}
+			}
+		}
+
+		stage('Push Image To Dockerhub') {
+			steps {
+				withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]){
+					sh '''
+						docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+						docker push maheshe/mahadocker1:latest
+					'''
+				}
+			}
+		}
+
+		stage('Set current kubectl context') {
+			steps {
+				withAWS(region:'us-west-2', credentials:'mahajenkinsA') {
+					sh '''
+						kubectl config use-context arn:aws:eks:us-west-2:360735975530:cluster/capstonecluster
+					'''
+				}
+			}
+		}
+ 
+		stage('Deploy blue contain') {
+			steps {
+				withAWS(region:'us-west-2', credentials:'mahajenkinsA') {
+					sh '''
+						aws2 eks update-kubeconfig --region us-west-2 --name capstonecluster --alias capstonecluster
+						/home/ubuntu/bin/aws-iam-authenticator token -i capstonecluster
+						kubectl apply -f /deploy-containers-pipeline/blue-controller.json
+					'''	
+				}
+			}
+		}
+	
+
+		stage('Deploy green containersi') {
+			steps {
+				withAWS(region:'us-west-2', credentials:'mahajenkinsA') {
+					sh '''
+						kubectl apply -f ./deploy-containers-pipeline/green-controller.json
+					'''
+				}
+			}
+		}
+
+		stage('Create the service in the cluster, redirect to blue') {
+			steps {
+				withAWS(region:'us-west-2', credentials:'mahajenkinsA') {
+					sh '''
+						kubectl apply -f ./deploy-containers-pipeline/blue-service.json
+					'''
+				}
+			}
+		}
+		stage('Wait user approve') {
+            steps {
+                input "Ready to redirect traffic to green?"
+            }
+        }
+
+		stage('Create the service in the cluster, redirect to green') {
+			steps {
+				withAWS(region:'us-west-2', credentials:'mahajenkinsA') {
+					sh '''
+						kubectl apply -f ./deploy-containers-pipeline/green-service.json
+					'''
+				}
+			}
+		}
+
+	}
+}
