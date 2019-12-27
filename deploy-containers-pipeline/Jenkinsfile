@@ -41,11 +41,11 @@ pipeline {
  
 		stage('Deploy blue contain') {
 			steps {
-				withAWS(region:'us-west-2', credentials:'mahajenkinsA', usernameVariable: 'Access Key ID', passwordVariable: 'Secret Access Key') {
+				withAWS(region:'us-west-2', credentials:'mahajenkinsA') {
 					sh '''
 						aws2 eks update-kubeconfig --region us-west-2 --name capstonecluster --alias capstonecluster
-						export AWS_ACCESS_KEY_ID= $Access Key ID
-						export AWS_SECRET_ACCESS_KEY= $Secret Access Key
+						export AWS_ACCESS_KEY_ID= $ACCESS_KEY_ID
+						export AWS_SECRET_ACCESS_KEY= $SECRET_ACCESS_KEY
 						/home/ubuntu/bin/aws-iam-authenticator token -i capstonecluster
 						kubectl apply -f /deploy-containers-pipeline/blue-controller.json
 					'''	
