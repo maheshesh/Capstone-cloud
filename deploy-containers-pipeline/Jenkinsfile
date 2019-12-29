@@ -35,6 +35,7 @@ pipeline {
 				withAWS(region:'us-west-2', credentials:'mahajenkinsA') {
 					sh '''
 						echo $AWS_ACCESS_KEY_ID
+						echo $AWS_SECRET_ACCESS_KEY
 						kubectl config use-context arn:aws:eks:us-west-2:360735975530:cluster/capstonecluster
 					'''
 				}
