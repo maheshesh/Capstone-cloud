@@ -43,7 +43,7 @@ pipeline {
 			steps {
 				withAWS(region:'us-west-2', credentials:'mahajenkinsA') {
 					sh '''
-						aws2 eks update-kubeconfig --region us-west-2 --name capstonecluster --alias capstonecluster
+						aws2 eks --region us-west-2 update-kubeconfig --name capstonecluster  --role-arn arn:aws:iam::360735975530:role/eksworkshop-admin
 						/home/ubuntu/bin/aws-iam-authenticator token -i capstonecluster
 						kubectl apply -f /deploy-containers-pipeline/blue-controller.json
 					'''	
