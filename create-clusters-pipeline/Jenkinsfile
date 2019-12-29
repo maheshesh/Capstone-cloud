@@ -25,6 +25,9 @@ pipeline {
 			steps {
 				withAWS(region:'us-west-2', credentials:'mahajenkinsA') {
 					sh '''
+						echo $AWS_ACCESS_KEY_ID
+						echo $AWS_SECRET_ACCESS_KEY
+						aws-iam-authenticator token -i cluster-name
 						aws2 eks --region us-west-2 update-kubeconfig --name capstonecluster  --role-arn arn:aws:iam::360735975530:role/eksworkshop-admin
 					'''
 				}
