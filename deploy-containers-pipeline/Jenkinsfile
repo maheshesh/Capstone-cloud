@@ -39,7 +39,7 @@ pipeline {
 			}
 		}
  
-		stage('Deploy blue contain') {
+		stage('Deploy blue container') {
 			steps {
 				withAWS(region:'us-west-2', credentials:'mahajenkinsA') {
 					sh '''
