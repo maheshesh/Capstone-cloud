@@ -25,7 +25,7 @@ pipeline {
 			steps {
 				withAWS(region:'us-west-2', credentials:'mahajenkinsA') {
 					sh '''
-						aws2 eks --region us-west-2 update-kubeconfig --name capstonecluster
+						aws2 eks --region us-west-2 update-kubeconfig --name capstonecluster  —role-arn arn:aws:iam::360735975530:role/eksworkshop-admin
 					'''
 				}
 			}
