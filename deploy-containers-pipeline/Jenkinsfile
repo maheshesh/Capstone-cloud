@@ -24,6 +24,7 @@ pipeline {
 					sh '''
 						docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 						docker push maheshe/mahadocker1:latest
+						echo $AWS_ACCESS_KEY_ID
 					'''
 				}
 			}
