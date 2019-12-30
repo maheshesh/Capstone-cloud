@@ -24,7 +24,6 @@ pipeline {
 					sh '''
 						docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 						docker push maheshe/mahadocker1:latest
-						echo $AWS_ACCESS_KEY_ID
 					'''
 				}
 			}
@@ -34,8 +33,6 @@ pipeline {
 			steps {
 				withAWS(region:'us-west-2', credentials:'mahajenkinsA') {
 					sh '''
-						echo $AWS_ACCESS_KEY_ID
-						echo $AWS_SECRET_ACCESS_KEY
 						/home/ubuntu/bin/aws-iam-authenticator token -i capstonecluster
 						aws2 sts get-caller-identity
 						kubectl config use-context arn:aws:eks:us-west-2:360735975530:cluster/capstonecluster
@@ -48,7 +45,7 @@ pipeline {
 			steps {
 				withAWS(region:'us-west-2', credentials:'mahajenkinsA') {
 					sh '''
-						aws2 eks --region us-west-2 update-kubeconfig --name capstonecluster  --role-arn arn:aws:iam::360735975530:role/eksctl-capstonecluster-cluster-ServiceRole-1IDVBXZ21AEMJ
+						aws2 eks --region us-west-2 update-kubeconfig --name capstonecluster  --role-arn arn:aws:iam::360735975530:role/eksctl-capstonecluster-cluster-ServiceRole-XHN87FCPULYW
 						/home/ubuntu/bin/aws-iam-authenticator token -i capstonecluster
 						kubectl apply -f /deploy-containers-pipeline/blue-controller.json
 					'''	
