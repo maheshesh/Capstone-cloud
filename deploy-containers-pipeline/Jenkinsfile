@@ -40,7 +40,7 @@ pipeline {
 			}
 		}
  
-		stage('CHECKDIND KUBECTL container') {
+		stage(' KUBECTL container') {
 			steps {
 				sh '''
 						kubectl get svc
