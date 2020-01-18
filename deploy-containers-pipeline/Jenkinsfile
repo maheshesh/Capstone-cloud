@@ -42,11 +42,9 @@ pipeline {
  
 		stage('CHECKDIND KUBECTL container') {
 			steps {
-				withAWS(region:'us-west-2', credentials:'mahajenkinsA') {
-					sh '''
+				sh '''
 						kubectl get svc
-					'''	
-				}
+					'''
 			}
 		}
 		stage('Deploy blue container') {
