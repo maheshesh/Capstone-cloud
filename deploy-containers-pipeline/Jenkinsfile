@@ -44,6 +44,7 @@ pipeline {
 			steps {
 				withAWS(region:'us-west-2', credentials:'mahajenkinsA') {
 					sh '''
+						kubectl get svc
 						kubectl apply -f /deploy-containers-pipeline/blue-controller.json
 					'''	
 				}
