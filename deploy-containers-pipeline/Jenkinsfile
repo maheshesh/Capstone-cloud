@@ -40,11 +40,16 @@ pipeline {
 			}
 		}
  
-		stage(' KUBECTL container') {
-			steps {
-				sh '''
+		stage(' KUBECTL containerWS') {
+			withAWS(region:'us-west-2', credentials:'mahajenkinsA') {
+				steps {
+					sh '''
+						kubectl config use-context arn:aws:eks:us-west-2:360735975530:cluster/capstonecluster
+						eksctl create iamidentitymapping --cluster  capstonecluster --arn arn:aws:iam::360735975530:role/eksAdminNewRoot --group system:masters --username admin
+
 						kubectl get svc
 					'''
+				}
 			}
 		}
 		stage('Deploy blue container') {
