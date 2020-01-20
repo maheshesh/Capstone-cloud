@@ -35,6 +35,7 @@ pipeline {
 					sh '''
 						aws2 eks --region us-west-2 update-kubeconfig --name capstonecluster  --role-arn arn:aws:iam::360735975530:role/eksAdminNewRoot
 						eksctl create iamidentitymapping --cluster  capstonecluster --arn arn:aws:iam::360735975530:role/eksAdminNewRoot --group system:masters --username admin
+						aws sts get-caller-identity
 						kubectl config use-context arn:aws:eks:us-west-2:360735975530:cluster/capstonecluster
 					'''
 				}
@@ -45,6 +46,7 @@ pipeline {
 			steps {
 				sh '''
 					kubectl config use-context arn:aws:eks:us-west-2:360735975530:cluster/capstonecluster
+					kubectl config view
 					kubectl get svc
 				'''
 			}
