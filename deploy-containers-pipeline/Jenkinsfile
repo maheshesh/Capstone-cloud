@@ -45,6 +45,7 @@ pipeline {
 		stage(' KUBECTL-NEWS ') {
 			steps {
 				sh '''
+					aws2 eks --region us-west-2 update-kubeconfig --name capstonecluster  --role-arn arn:aws:iam::360735975530:role/eksAdminNewRoot
 					kubectl config use-context arn:aws:eks:us-west-2:360735975530:cluster/capstonecluster
 					kubectl config view
 					kubectl get svc
