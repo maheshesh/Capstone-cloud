@@ -60,7 +60,7 @@ pipeline {
 			steps {
 				withAWS(region:'us-west-2', credentials:'mahajenkinsA') {
 					sh '''
-						kubectl apply -f ./deploy-containers-pipeline/green-controller.json
+						kubectl apply -f deploy-containers-pipeline/green-controller.json
 					'''
 				}
 			}
