@@ -49,7 +49,7 @@ pipeline {
 					sh '''
 						kubectl config view
 						kubectl get svc
-						kubectl apply -f blue-controller.json
+						kubectl apply -f deploy-containers-pipeline/blue-controller.json
 					'''	
 				}
 			}
