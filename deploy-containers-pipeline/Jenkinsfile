@@ -29,7 +29,7 @@ pipeline {
 			}
 		}
 
-		stage('SetW current kubectl contextWW') {
+		stage(' current kubectl contextWW') {
 			steps {
 				withAWS(region:'us-west-2', credentials:'mahajenkinsA') {
 					sh '''
@@ -43,7 +43,7 @@ pipeline {
 		}
  
 		
-		stage('DWWeploy blue containera') {
+		stage('DUPLOY blue containera') {
 			steps {
 				withAWS(region:'us-west-2', credentials:'mahajenkinsA') {
 					sh '''
